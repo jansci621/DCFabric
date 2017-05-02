@@ -1,0 +1,18 @@
+#!/bin/bash
+
+echo hello
+
+list_alldir(){  
+    for file2 in `ls -a $1`  
+        do  
+            if [ x"$file2" != x"." -a x"$file2" != x".." -a x"$file2" != x".svn" ];then  
+                if [ -d "$1/$file2" ];then  
+                    echo "$1/$file2"
+                    svn propset svn:ignore "$2" "$1/$file2"
+                    list_alldir "$1/$file2"  "$2"
+                fi  
+            fi  
+        done  
+} 
+
+list_alldir ./ *.d 
